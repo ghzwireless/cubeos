@@ -29,10 +29,18 @@ set(CMAKE_CXX_COMPILE_OBJECT        "<CMAKE_CXX_COMPILER> <DEFINES> ${EXPLICIT_I
 # functions (e.g. malloc) can be overridden by symbols in <LINK_LIBRARIES>
 set(CMAKE_CXX_LINK_EXECUTABLE       "<CMAKE_CXX_COMPILER> <CMAKE_CXX_LINK_FLAGS> <LINK_FLAGS> -Wl,-Map,<TARGET>.map -Wl,--start-group <OBJECTS> <LINK_LIBRARIES> ${GLOBALLY_LINKED_TARGET_LIBS} -lstdc++ -lsupc++ -lm -lc -lgcc -lstdc++ -lsupc++ -lm -lc -lgcc -Wl,--end-group -o <TARGET>")
 
-set(CMAKE_CXX_FLAGS_DEBUG_INIT          "-g -gdwarf-3")
+
+IF(CMAKE_BUILD_TYPE MATCHES Debug)
+    set(CMAKE_CXX_FLAGS_DEBUG_INIT          "-g -gdwarf-3")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT "-Os -g -gdwarf-3 -DNDEBUG")
+ELSE()
+    set(CMAKE_CXX_FLAGS_DEBUG_INIT          "")
+    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT "-Os -DNDEBUG")
+ENDIF()
+
 set(CMAKE_CXX_FLAGS_MINSIZEREL_INIT     "-Os -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE_INIT        "-Os -DNDEBUG")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO_INIT "-Os -g -gdwarf-3 -DNDEBUG")
+
 set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem ")
 
 if(YOTTA_CFG_DEBUG_OPTIONS_COVERAGE)
