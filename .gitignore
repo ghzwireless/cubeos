@@ -47,6 +47,7 @@ tags
 yotta_*
 
 html/
+doxygen_warn.log
 *.swo
 *.swp
 *.swo
